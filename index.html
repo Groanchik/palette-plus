@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Тут очень круто, это website для профессиональных UI/UX дизайнеров, художников. ">
+    <title>PalettePlus | 2026 Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="smooth-wrapper">
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>Palette<span>Plus</span></h1>
+                <p>Профессиональный инструмент для работы с цветом. Создавай, смешивай и копируй в один клик.</p>
+                <a href="#app" class="btn-main">Начать создание</a>
+            </div>
+        </section>
+        <section class="app-container" id="app">
+            <div class="glass-panel zone-1">
+                <h2>Генератор Градиентов</h2>
+                <span class="gradient-info">Настройте цвета и угол</span>
+                <div class="preview" id="gradient-preview"></div>
+                <div class="controls">
+                    <div class="control-group">
+                        <label>Угол (<span>45</span>°)</label>
+                        <input type="range" id="angle" min="0" max="360" value="45">
+                    </div>
+                    <div id="colors-container"></div>
+                    <button class="btn-secondary" onclick="addColorInput()">Добавить цвет</button>
+                    <button class="btn-secondary" onclick="randomize()">Magic Random ✨</button>
+                    <button class="btn-copy" onclick="copyCSS(document.getElementById('css-code'))">Копировать CSS</button>
+                    <div id="css-code" style="display:none;"></div>
+                </div>
+            </div>
+            <div class="glass-panel zone-2">
+                <h2>Градиент Текста</h2>
+                <div class="text-preview">
+                    <input type="text" id="text-input" value="PalettePlus">
+                </div>
+                <div class="controls">
+                    <div id="text-colors-container"></div>
+                    <button class="btn-secondary" onclick="addTextColorInput()">Добавить цвет текста</button>
+                    <button class="btn-secondary" onclick="copyCSS(document.getElementById('text-css-code'))">Копировать CSS текста</button>
+                    <div id="text-css-code" style="display:none;"></div>
+                </div>
+            </div>
+            <div class="glass-panel zone-3">
+                <h2>Библиотека цветов</h2>
+                <input type="text" id="color-search" placeholder="Найти цвет по имени или HEX..." oninput="filterColors()">
+                <div class="colors-scroll-viewport">
+                    <div id="main-colors-grid" class="colors-grid-mini"></div>
+                </div>
+            </div>
+        </section>
+        <section class="section-palette" id="palette">
+            <div class="palette-grid-wrapper">
+                <div class="glass-panel main-generator">
+                    <h2>Генератор палитр</h2>
+                    <div class="base-color-control">
+                        <label for="base-color-picker">Базовый цвет:</label>
+                        <input type="color" id="base-color-picker" value="#38bdf8" oninput="generateNewPalette(document.querySelector('.num-colors-label span').innerText, 'random', this.value)">
+                    </div>
+                    <div id="palette-grid" class="palette-grid"></div>
+                    <div class="palette-controls">
+                        <div class="control-group num-colors-label">
+                            <label>Количество цветов: <span>5</span></label>
+                            <input type="range" min="1" max="10" value="5" oninput="document.querySelector('.num-colors-label span').innerText = this.value; generateNewPalette(this.value, 'random', document.getElementById('base-color-picker').value)">
+                        </div>
+                        <h3>Быстрые пресеты:</h3>
+                        <div class="presets-group">
+                            <button class="btn-secondary" title="Цвета, расположенные рядом на цветовом круге" onclick="generateNewPalette(document.querySelector('.num-colors-label span').innerText, 'analogous', document.getElementById('base-color-picker').value)">Аналогичные</button>
+                            <button class="btn-secondary" title="Цвета, расположенные напротив друг друга на цветовом круге" onclick="generateNewPalette(document.querySelector('.num-colors-label span').innerText, 'complementary', document.getElementById('base-color-picker').value)">Комплементарные</button>
+                            <button class="btn-secondary" title="Оттенки одного цвета" onclick="generateNewPalette(document.querySelector('.num-colors-label span').innerText, 'monochromatic', document.getElementById('base-color-picker').value)">Монохромные</button>
+                            <button class="btn-secondary" title="Три равномерно расположенных цвета" onclick="generateNewPalette(document.querySelector('.num-colors-label span').innerText, 'triadic', document.getElementById('base-color-picker').value)">Триадные</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-panel popular-palettes">
+                    <h3>Популярные палитры</h3>
+                    <div id="popular-palettes-grid" class="colors-scroll-viewport"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
